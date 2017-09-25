@@ -35,10 +35,6 @@ int minTestRow;
 
 /* Averaging variables */
 int mandarinTruePos = 0, appleTruePos = 0, orangeTruePos = 0, lemonTruePos = 0;
-float mandarinAccuracy;
-float appleAccuracy;
-float orangeAccuracy;
-float lemonAccuracy;
 
 
 //This function predicts the fruit name of the test variable using the k nearest neighbor algorithm.
@@ -69,9 +65,8 @@ void predictTestType() {
 //This function calulates the algorithm's accuracy in predicting the test variable's fruit name.
 void calculateAccuracy() {
   
-   float correct = 0;
+   float totalTruePos = 0;
    
-
    for (int i = 1; i < testRowCount ; i++){
      print("The predicted name is " + predictedString[i] + ". The real fruit name is  " + labelString[i * 4] + "\n");
       
@@ -85,11 +80,11 @@ void calculateAccuracy() {
         }else if (labelString[i * 4].equals("lemon")){
           lemonTruePos++;
         }
-        correct++;
+        totalTruePos++;
       }
    }
-   float accuracy = 100 * (correct / (testRowCount-1));
-   print("\nMicro Average: " + accuracy + "%\n");
+   float microAvg = 100 * (totalTruePos / (testRowCount-1));
+   print("\nMicro Average: " + microAvg + "%\n");
    //print("True Positives: " +mandarinTruePos +" "+ appleTruePos+ " "+ orangeTruePos + " "+ lemonTruePos + "\n");
 }
 
