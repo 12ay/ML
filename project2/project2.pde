@@ -230,23 +230,23 @@ void drawTrainingData() {
     }
   } 
   
-  for(int testRow = 1; testRow < testRowCount; testRow++){
+  for(int i = 1; i < testRowCount; i++){
     //This loop colors the test variables.
     
-    if ( predictedTestType[testRow] == 1 ) {
+    if ( predictedString[i].equals("apple") ) {
              // Red for Apple  
              fill(colorValues[0]);
-        } else if (predictedTestType[testRow] == 2) {
+        } else if (predictedString[i].equals("mandarin")) {
              // Green for Mandarin 
              fill(colorValues[1]);
-        } else if (predictedTestType[testRow] == 3) {
+        } else if (predictedString[i].equals("orange")) {
             // Orange for Orange
             fill(colorValues[2]); 
-        } else if (predictedTestType[testRow] == 4) {
+        } else if (predictedString[i].equals("lemon")) {
             // Yellow for Lemon
             fill(colorValues[3]); 
         }
-        rect(widthTest[testRow] * 50, heightTest[testRow] * 50, 7,7);
+        rect(widthTest[i] * 50, heightTest[i] * 50, 7,7);
     }
 }
 
