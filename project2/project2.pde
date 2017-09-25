@@ -20,7 +20,6 @@ float [] heightTest;
 
 
 /* Prediction variables */
-int [] predictedTestType;
 String [] predictedString;
 
 /* Distance arrays*/
@@ -42,27 +41,25 @@ void predictTestType() {
   
    dist = new double[trainRowCount];
    minDist = new double[testRowCount];
-   
-   predictedTestType = new int[testRowCount];
    predictedString = new String[testRowCount];
    
-   for (int testRow = 1; testRow < testRowCount; testRow++){       // 14 iterations
+   for (int testRow = 1; testRow < testRowCount; testRow++){
      
      minDist[testRow] = 99;
-     for(int trainRow = 1; trainRow < trainRowCount; trainRow++){  //45 iterations
+     for(int trainRow = 1; trainRow < trainRowCount; trainRow++){
        dist[trainRow] = Math.sqrt((widthTraining[trainRow] - widthTest[testRow])*(widthTraining[trainRow] - widthTest[testRow]) + (heightTraining[trainRow] - heightTest[testRow])*(heightTraining[trainRow] - heightTest[testRow]));
               
-       if (dist[trainRow] <= minDist[testRow]){        //minDist in this section
+       //if there is a new minimum distance, the predicted string is updated
+       if (dist[trainRow] <= minDist[testRow]){
          minDist[testRow] = dist[trainRow]; 
-         minTestRow = trainRow;                        //index of dist[] where minDist occurs, +1 to get the row number
+         minTestRow = trainRow;
          predictedString[testRow] = trainString[minTestRow];
-         predictedTestType[testRow] = trainLabel[minTestRow];
        }
      }
    }
 }
 
-//This function calulates the algorithm's accuracy in predicting the test variable's fruit name.
+//This function counts the number of true positives from and calulates the micro average of the algorithm
 void calculateAccuracy() {
   
    float totalTruePos = 0;
@@ -85,10 +82,9 @@ void calculateAccuracy() {
    }
    float microAvg = 100 * (totalTruePos / (testRowCount-1));
    print("\nMicro Average: " + microAvg + "%\n");
-   //print("True Positives: " +mandarinTruePos +" "+ appleTruePos+ " "+ orangeTruePos + " "+ lemonTruePos + "\n");
 }
 
-
+//This function counts the instances and calculates the macro average of the algorithm
 void calculateMacro(){
 
   float mandarinInst = 0, appleInst = 0, orangeInst = 0, lemonInst = 0;
@@ -144,28 +140,22 @@ void trainingData(){
   trainString = new String[trainRowCount];
   trainLabel = new int[trainRowCount];
   
-
-
+  //this for-loop fills up arrays conerning the training data
   for (int row = 1, i = 0; row < rowCount; row++, i++) {        
     int excludeTest = row % 4;
     if (excludeTest != 0){
     widthTraining[i] = dataset.getFloat(row, 4);
     heightTraining[i] = dataset.getFloat(row, 5);
-    trainString[i] = dataset.getString(row,1);      //fills up an array of fruit names from the 45 training values
+    trainString[i] = dataset.getString(row,1);
     trainLabel[i] = dataset.getInt(row,0);
-   
     } else if (excludeTest ==0){
-
      widthTraining[i] = dataset.getFloat(row+1, 4);
      heightTraining[i] = dataset.getFloat(row+1, 5);
      trainString[i] = dataset.getString(row+1,1);
      row++;
     }
-    
   }
-
 }
-
 
 //This function gathers the data of all the test variables.
 void testData(){
@@ -175,7 +165,7 @@ void testData(){
   widthTest = new float[testRowCount];
   heightTest = new float[testRowCount];
   
-  for (int row = 1; row < testRowCount; row++) {      //for row = 0, widthTest[0] = NaN... but for row = 1, a random yellow rectangle
+  for (int row = 1; row < testRowCount; row++) {
     int everyFourth = row * 4;
     widthTest[row] = dataset.getFloat(everyFourth, 4);
     heightTest[row] = dataset.getFloat(everyFourth, 5);
