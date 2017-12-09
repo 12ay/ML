@@ -4,4 +4,4 @@ In k-means algorithm, centroids are randomly established within the data's range
 
 K-median is similar to k-means, but instead of the average, we move the centroid based on the median of its data points.
 
-K-medoid sorts the data and reassigns medoids until there is minimal dissimilarity among the data within a cluster.
+K-medoid sorts the data and reassigns centroids until there is minimal dissimilarity among the data within a cluster.
